@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   const [currentTime, setCurrentTime] = useState("kiccu nai");
-  const [alermHour, setAlermHour] = useState(0);
-  const [alermMinute, setAlermMinute] = useState(0);
+  const [alermHour, setAlermHour] = useState(-1);
+  const [alermMinute, setAlermMinute] = useState(-1);
   const [alermPeriod, setAlermPeriod] = useState("");
 
   useEffect(() => {
@@ -22,7 +23,15 @@ const App = () => {
     setInterval(() => setCurrentTime(getCurrentTime()), 1000);
   }, []);
   const setAlerm = () => {
-    if(alermHour === 0)
+    if (alermHour === -1) {
+      toast("Set Alerm Hour!");
+    }
+    if (alermMinute === -1) {
+      toast("Set Alerm Minute!");
+    }
+    if (alermPeriod === '') {
+      toast("Set Alerm Period(AM/PM)!");
+    }
     const curTime = currentTime;
     console.log(curTime);
   };
@@ -53,6 +62,7 @@ const App = () => {
           <option value="01">11</option>
           <option value="01">12</option>
         </select>
+        <ToastContainer></ToastContainer>
         <select
           name="minutes"
           id="minutes"
