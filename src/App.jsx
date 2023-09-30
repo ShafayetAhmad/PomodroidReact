@@ -23,15 +23,20 @@ const App = () => {
     setInterval(() => setCurrentTime(getCurrentTime()), 1000);
   }, []);
   const setAlerm = () => {
+    let alermToSet = true;
     if (alermHour === -1) {
       toast("Set Alerm Hour!");
+      alermToSet = false;
     }
     if (alermMinute === -1) {
       toast("Set Alerm Minute!");
+      alermToSet = false;
     }
-    if (alermPeriod === '') {
+    if (alermPeriod === "") {
       toast("Set Alerm Period(AM/PM)!");
+      alermToSet = false;
     }
+    if (!alermToSet) return;
     const curTime = currentTime;
     console.log(curTime);
   };
