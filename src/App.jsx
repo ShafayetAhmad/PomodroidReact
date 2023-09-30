@@ -3,8 +3,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import audioFile from "./assets/audio.mp3";
 const App = () => {
-  const [currentTime, setCurrentTime] = useState("kiccu nai");
-  const currentTimeRef = useRef("kiccu nai");
+  const [currentTime, setCurrentTime] = useState("☢️☢️☢️☢️");
+  const currentTimeRef = useRef("☢️☢️☢️☢️");
   const [alermHour, setAlermHour] = useState("Hour");
   const [alermMinute, setAlermMinute] = useState("Min");
   const [alermPeriod, setAlermPeriod] = useState("AM/PM");
