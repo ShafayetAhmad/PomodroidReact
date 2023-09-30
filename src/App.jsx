@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import audioFile from "./assets/audio.mp3";
 const App = () => {
   const [currentTime, setCurrentTime] = useState("kiccu nai");
-  const [alermHour, setAlermHour] = useState(-1);
-  const [alermMinute, setAlermMinute] = useState(-1);
-  const [alermPeriod, setAlermPeriod] = useState("");
+  const currentTimeRef = useRef("kiccu nai");
+  const [alermHour, setAlermHour] = useState("Hour");
+  const [alermMinute, setAlermMinute] = useState("Min");
+  const [alermPeriod, setAlermPeriod] = useState("AM/PM");
 
   useEffect(() => {
     const getCurrentTime = () => {
@@ -21,51 +23,67 @@ const App = () => {
     };
 
     setInterval(() => setCurrentTime(getCurrentTime()), 1000);
+    setInterval(() => {
+      const newCurrentTime = getCurrentTime();
+      currentTimeRef.current = newCurrentTime;
+      setCurrentTime(newCurrentTime);
+    }, 1000);
   }, []);
   const setAlerm = () => {
     let alermToSet = true;
-    if (alermHour === -1) {
+    if (alermHour === "Hour") {
       toast("Set Alerm Hour!");
       alermToSet = false;
     }
-    if (alermMinute === -1) {
+    if (alermMinute === "Min") {
       toast("Set Alerm Minute!");
       alermToSet = false;
     }
-    if (alermPeriod === "") {
+    if (alermPeriod === "AM/PM") {
       toast("Set Alerm Period(AM/PM)!");
       alermToSet = false;
     }
     if (!alermToSet) return;
-    const curTime = currentTime;
-    console.log(curTime);
+    // const alermTime = currentTime;
+    const alermTime = `${alermHour.toString()}:${alermMinute.toString()}:00 ${alermPeriod}`;
+
+    setInterval(() => {
+      if (alermTime === currentTimeRef.current) {
+        console.log(alermTime);
+        const audio = new Audio(audioFile);
+        audio.play();
+      }
+    }, 1000);
   };
   return (
     <>
       <div className="w-96 h-36 bg-blue-500 mx-auto mt-10 rounded-full flex justify-center items-center  text-white text-6xl border-8 border-gray-300">
         {currentTime}
       </div>
-      <div className="flex justify-center mt-10 gap-4 ">
+      <div className="flex justify-center mt-10 gap-1 ">
         <select
           name="hours"
           id="hours"
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
           onChange={(e) => {
+            console.log(e.target.value);
             setAlermHour(e.target.value);
           }}
         >
+          <option value="">Hour</option>
+
           <option value="01">01</option>
-          <option value="01">02</option>
-          <option value="01">03</option>
-          <option value="01">04</option>
-          <option value="01">05</option>
-          <option value="01">06</option>
-          <option value="01">07</option>
-          <option value="01">08</option>
-          <option value="01">09</option>
-          <option value="01">10</option>
-          <option value="01">11</option>
-          <option value="01">12</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
         </select>
         <ToastContainer></ToastContainer>
         <select
@@ -73,16 +91,20 @@ const App = () => {
           id="minutes"
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
           onChange={(e) => {
+            console.log(e.target.value);
             setAlermMinute(e.target.value);
           }}
         >
+          <option value="">Min</option>
           <option value="00">00</option>
           <option value="05">05</option>
+          <option value="08">08</option>
           <option value="10">10</option>
           <option value="15">15</option>
           <option value="20">20</option>
           <option value="25">25</option>
           <option value="30">30</option>
+          <option value="49">49</option>
           <option value="35">35</option>
           <option value="40">40</option>
           <option value="45">45</option>
@@ -98,14 +120,14 @@ const App = () => {
             setAlermPeriod(e.target.value);
           }}
         >
+          <option value="">AM/PM</option>
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
-        <button className="btn btn-primary" onClick={setAlerm}>
+        <button className="btn btn-neutral" onClick={setAlerm}>
           Set Alerm
         </button>
       </div>
-      <div>new update</div>
     </>
   );
 };
