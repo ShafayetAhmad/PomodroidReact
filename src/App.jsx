@@ -46,10 +46,10 @@ const App = () => {
     if (!alermToSet) return;
     // const alermTime = currentTime;
     const alermTime = `${alermHour.toString()}:${alermMinute.toString()}:00 ${alermPeriod}`;
+    toast(`Alerm Set at ${alermTime}` )
 
     setInterval(() => {
       if (alermTime === currentTimeRef.current) {
-        console.log(alermTime);
         const audio = new Audio(audioFile);
         audio.play();
       }
@@ -98,13 +98,11 @@ const App = () => {
           <option value="">Min</option>
           <option value="00">00</option>
           <option value="05">05</option>
-          <option value="08">08</option>
           <option value="10">10</option>
           <option value="15">15</option>
           <option value="20">20</option>
           <option value="25">25</option>
           <option value="30">30</option>
-          <option value="49">49</option>
           <option value="35">35</option>
           <option value="40">40</option>
           <option value="45">45</option>
